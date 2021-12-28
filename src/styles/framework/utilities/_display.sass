@@ -10,15 +10,18 @@
   display: flex
 .flex-wrap
   display: flex
-  flex-wrap: wrap  
+  flex-wrap: wrap
+.flex-nowrap
+  display: flex
+  flex-wrap: nowrap    
 .grid
   display: grid
-  gap: var(--grid-gap, 0rem)
+  gap: var(--gap, 0rem)
 //grid  
 @for $i from 1 through $grid-columns
   .grid-#{$i}
     display: grid
-    grid-gap: var(--grid-gap, 0rem)
+    grid-gap: var(--gap, 0rem)
     grid-template-columns: repeat(var(--grid-cols), minmax(0,1fr))
     --grid-cols: #{$i}
 .hidden
@@ -43,14 +46,14 @@
   .grid-#{$key}
     @media(min-width: #{$value})
       display: grid
-      gap: var(--grid-gap, 0rem)
+      gap: var(--gap, 0rem)
 //grid with breakpoints    
 @each $key, $value in $breakpoints
   @for $i from 1 through $grid-columns
     .grid-#{$key}-#{$i}
       @media(min-width: #{$value})
         display: grid
-        grid-gap: var(--grid-gap, 0rem)
+        grid-gap: var(--gap, 0rem)
         grid-template-columns: repeat(var(--grid-cols), minmax(0,1fr))
         --grid-cols: #{$i}
 @each $key, $value in $breakpoints
@@ -111,11 +114,12 @@
     
 .columns--auto
   display: grid 
+  gap: var(--gap, 0rem)
   grid-auto-flow: column
 .columns
   display: grid 
   grid-auto-flow: column  
   justify-content: flex-start
-  gap: var(--grid-gap, calc(2*var(--spacing, 0.5rem)))
+  gap: var(--gap, 0)
 
         

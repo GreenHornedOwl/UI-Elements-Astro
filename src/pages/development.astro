@@ -1,0 +1,192 @@
+---
+import Master from '../design/Master.astro';
+import Section from '../design/partials/Section.astro';
+---
+
+<Master title="Commergent UI | @Next">
+
+<Section classMap="gradient">
+  <Section container="container--narrow" classMap="pb-2 mb-2 pt-5 mt-5 text-center color-light">
+      <h2 class="h1 weight-superbold pb-3">The Carousel</h2>
+      <p class="font-lg">The Carousel has two display modes: one for touch enabled devices and one for non-touch enabled devices. Where touch events are available the Javascript controls are disabled and touch scroll is enabled, along with a peek to next item which is visible by default but ca disabled. For non-touch enabled the carousel is controlled exclusively with the left and right arrows.</p>
+  </Section>
+
+  <Section container="container" classMap="pb-5 color-light">    
+      <div class="native-carousel mb-5">
+          <div class="track">
+              <div class="item"><img src="https://picsum.photos/id/1011/400/400" alt=""></div>
+              <div class="item"><img src="https://picsum.photos/id/1012/400/400" alt=""></div>
+              <div class="item"><img src="https://picsum.photos/id/1013/400/400" alt=""></div>
+              <div class="item"><img src="https://picsum.photos/id/1014/400/400" alt=""></div>
+              <div class="item"><img src="https://picsum.photos/id/1015/400/400" alt=""></div>
+              <div class="item"><img src="https://picsum.photos/id/1016/400/400" alt=""></div>
+              <div class="item"><img src="https://picsum.photos/id/1018/400/400" alt=""></div>
+          </div>
+          <button class="prev btn-fill--dark" style="display: none;">&#8592;</button>
+          <button class="next btn-fill--dark">&#8594;</button>
+      </div>
+      
+  </Section>
+</Section>
+
+<Section classMap="gradient--gray">
+  <Section container="container--narrow" classMap="pb-2 mb-2 pt-5 mt-5 text-center">
+      <h2 class="h1 weight-superbold pb-3">The Slider</h2>
+      <p class="font-lg">The Slider is built on top of best practices rules enforced by Google to maximize web performance and Core Web Vitals metrics.</p>
+  </Section>
+
+  <Section container="container" classMap="pb-5">    
+      <div class="native-slider mb-5">
+        <div class="track">
+          <div class="slide">
+            <img src="https://picsum.photos/id/1011/1920/800" />
+          </div>
+          <div class="slide">
+            <img loading="lazy" src="https://picsum.photos/id/1012/1920/800" />
+          </div>
+          <div class="slide">
+            <img loading="lazy" src="https://picsum.photos/id/1013/1920/800" />
+          </div>
+          <div class="slide">
+            <img loading="lazy" src="https://picsum.photos/id/1014/1920/800" />
+          </div>
+          <div class="slide">
+            <img loading="lazy" src="https://picsum.photos/id/1015/1920/800" />
+          </div>
+        </div>       
+        <button class="prev btn-fill--dark">&#8592;</button>
+        <button class="next btn-fill--dark">&#8594;</button>        
+      </div>
+      
+  </Section>
+</Section>
+</Master>
+
+<script>
+let node = document;
+node.querySelectorAll('.native-carousel').forEach((el) => {
+    if (el.querySelector('.next')!==null) {
+      el.querySelector('.next').addEventListener('click', (e) => {
+        let element = el.querySelector('.track');       
+        let style = getComputedStyle(element);
+        //let gap = parseInt(style.getPropertyValue('gap').split('px')[0]);
+        let gap = parseInt(getComputedStyle(el.querySelector(".item")).getPropertyValue("margin-right").split('px')[0]);
+        let scroll = el
+          .querySelector('.item')
+          .getBoundingClientRect().width;
+        let scrolled = element.scrollLeft;
+        console.log(scrolled, scroll, gap, Math.ceil(scrolled + scroll + gap));
+        let totalScrollValue = Math.ceil(scrolled + scroll + gap);
+        let scrollRight = element.scrollWidth - element.offsetWidth - element.scrollLeft;
+        console.log({
+          totalScrollValue,
+          gap,
+          width: element.scrollWidth,
+          scrollLeft: element.scrollLeft,
+          scrollRight: element.scrollWidth - element.offsetWidth - element.scrollLeft
+        });      
+        if (scrollRight < gap) {
+          totalScrollValue = 0;
+          el.querySelector('.prev').style.setProperty("display","none");
+        } else {
+          el.querySelector('.prev').style.removeProperty("display");
+        }
+        element.scrollTo({
+          top: 0,
+          left: totalScrollValue,
+          behavior: 'smooth',
+        });
+      });
+    }
+    if(el.querySelector('.prev')!==null){
+      el.querySelector('.prev').addEventListener('click', (e) => {
+        let element = el.querySelector('.track');
+        let style = getComputedStyle(element);
+        //let gap = parseInt(style.getPropertyValue('gap').split('px')[0]);
+        let gap = parseInt(getComputedStyle(el.querySelector(".item")).getPropertyValue("margin-right").split('px')[0]);
+        let scroll = el
+          .querySelector('.track .item')
+          .getBoundingClientRect().width;
+        let scrolled = element.scrollLeft;
+        let totalScrollValue = Math.ceil(scrolled - scroll - gap);
+        // console.log({
+        //   totalScrollValue,
+        //   width: element.scrollWidth,
+        // });
+        if (totalScrollValue < gap) {
+          // totalScrollValue = element.scrollWidth;
+          e.currentTarget.style.setProperty("display","none");
+        }
+        //console.log(scrolled, scroll, gap, Math.ceil(scrolled - scroll - gap));
+        element.scrollTo({
+          top: 0,
+          left: totalScrollValue,
+          behavior: 'smooth',
+        });
+      });
+    }
+  });
+  document.querySelectorAll('.native-slider').forEach((el) => {
+    el.querySelector('.prev').addEventListener('click', (e) => {
+      //move-left     
+      let element = el.querySelector('.track');
+      let slides = element.childElementCount + 1;
+      let elementWidth = el.getBoundingClientRect().width;
+      let scrolled = element.scrollLeft;
+      let rest = Math.ceil(scrolled / elementWidth);
+      // element.scrollLeft = scrolled - elementWidth;
+      if (rest === 0) {
+        element.scrollTo({
+        top: 0,
+        left: element.scrollWidth - parseInt(elementWidth),
+        behavior: 'smooth',
+      });
+        // e.currentTarget.setAttribute('disabled', 'disabled');
+      } else {
+        // e.currentTarget.removeAttribute('disabled');
+        element.scrollTo({
+        top: 0,
+        left: scrolled - elementWidth,
+        behavior: 'smooth',
+      });
+      }
+      
+      if (el.querySelector('.next').hasAttribute('disabled')) {
+        el.querySelector('.next').removeAttribute('disabled');
+      }
+      console.log({ scrolled, elementWidth, rest, slides });
+    }); 
+    el.querySelector('.next').addEventListener('click', (e) => {
+      //move-right      
+      let element = el.querySelector('.track');
+      let slides = element.childElementCount;      
+      let elementWidth = el.getBoundingClientRect().width;
+      let scrolled = element.scrollLeft;
+      let rest = Math.ceil(scrolled / elementWidth);
+      //element.scrollLeft = scrolled + elementWidth;
+      if (slides === rest + 1) {
+        //e.currentTarget.setAttribute('disabled', 'disabled');
+
+        element.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        });
+
+      } else {
+        //e.currentTarget.removeAttribute('disabled');
+        
+        element.scrollTo({
+          top: 0,
+          left: scrolled + elementWidth,
+          behavior: 'smooth',
+        });
+      }
+      
+      if (el.querySelector('.prev').hasAttribute('disabled')) {
+        el.querySelector('.prev').removeAttribute('disabled');
+      }
+      console.log({ scrolled, elementWidth, rest, slides });
+    });
+  });
+</script>

@@ -16,100 +16,24 @@ import Section from '../design/partials/Section.astro';
 ---
 
 <Master title="Commergent UI | @Next">
-<Section container="container" classMap="text-center my-5">
-    <h1 class="hr2 weight-superbold">Commergent UI <span class="color-brand">@NEXT</span></h1>
-</Section>
-<Section container="container--narrow" classMap="my-5 font-xl">
-    <p>This project was built to show off the newest technology available in all modern browsers and to provide a visual guide to future-proof implementations of E-Commerce visual elements and micro-interactions. All these examples strive to maximizing Google <a href="https://web.dev/patterns/web-vitals-patterns/" target="_blank">Core Web Vitals</a> metrics and <a href="https://web.dev/lighthouse-performance/#metrics" target="_blank">Lighthouse</a> scores.</p>
+<Section classMap="h-100vh grid place-items-center gradient--gray">
+  <Section container="container" classMap="text-center my-5">
+      <h1 class="hr2 weight-superbold">Commergent UI <span class="color-brand">@NEXT</span></h1>
+  </Section>
+  <Section container="container--narrow" classMap="my-5">
+      <p class="font-xl">This project was built to show off the newest technology available in all modern browsers and to provide a visual guide to future-proof implementations of E-Commerce visual elements and micro-interactions. All these examples strive to maximizing Google <a href="https://web.dev/patterns/web-vitals-patterns/" target="_blank">Core Web Vitals</a> metrics and <a href="https://web.dev/lighthouse-performance/#metrics" target="_blank">Lighthouse</a> scores.</p>
+      <div class="flex-wrap child-mr-2 mt-4">
+        <button type="button" class="btn-fill--brand">Build your web identity</button>
+        <a href="development" class="btn btn-border--dark border-2">Developer documentation</a>
+      </div>
+  </Section>
 </Section>
 
-<Section container="container--narrow" classMap="pb-2 mt-5 text-center bg-brand color-light">
-    <h2 class="h1 weight-superbold mt-5 pb-3">The Carousel</h2>
-    <p class="font-lg">The Carousel has two display modes: one for touch enabled devices and one for non-touch enabled devices. Where touch events are available the Javascript controls are disabled and touch scroll is enabled, along with a peek to next item which is visible by default but ca disabled. For non-touch enabled the carousel is controlled exclusively with the left and right arrows.</p>
-</Section>
 
-<Section container="container" classMap="pb-5 bg-brand color-light">    
-    <div class="native-carousel">
-        <div class="track">
-            <div class="item"><img src="https://picsum.photos/id/1011/400/400" alt=""></div>
-            <div class="item"><img src="https://picsum.photos/id/1012/400/400" alt=""></div>
-            <div class="item"><img src="https://picsum.photos/id/1013/400/400" alt=""></div>
-            <div class="item"><img src="https://picsum.photos/id/1014/400/400" alt=""></div>
-            <div class="item"><img src="https://picsum.photos/id/1015/400/400" alt=""></div>
-            <div class="item"><img src="https://picsum.photos/id/1016/400/400" alt=""></div>
-            <div class="item"><img src="https://picsum.photos/id/1018/400/400" alt=""></div>
-        </div>
-        <button class="prev btn-fill--dark" style="display: none;">&#8592;</button>
-        <button class="next btn-fill--dark">&#8594;</button>
-    </div>
-</Section>
+
 
 </Master>
-<script>
-let node = document;
-node.querySelectorAll('.native-carousel').forEach((el) => {
-    if (el.querySelector('.next')!==null) {
-      el.querySelector('.next').addEventListener('click', (e) => {
-        let element = el.querySelector('.track');       
-        let style = getComputedStyle(element);
-        //let gap = parseInt(style.getPropertyValue('gap').split('px')[0]);
-        let gap = parseInt(getComputedStyle(el.querySelector(".item")).getPropertyValue("margin-right").split('px')[0]);
-        let scroll = el
-          .querySelector('.item')
-          .getBoundingClientRect().width;
-        let scrolled = element.scrollLeft;
-        console.log(scrolled, scroll, gap, Math.ceil(scrolled + scroll + gap));
-        let totalScrollValue = Math.ceil(scrolled + scroll + gap);
-        let scrollRight = element.scrollWidth - element.offsetWidth - element.scrollLeft;
-        console.log({
-          totalScrollValue,
-          gap,
-          width: element.scrollWidth,
-          scrollLeft: element.scrollLeft,
-          scrollRight: element.scrollWidth - element.offsetWidth - element.scrollLeft
-        });      
-        if (scrollRight < gap) {
-          totalScrollValue = 0;
-          el.querySelector('.prev').style.setProperty("display","none");
-        } else {
-          el.querySelector('.prev').style.removeProperty("display");
-        }
-        element.scrollTo({
-          top: 0,
-          left: totalScrollValue,
-          behavior: 'smooth',
-        });
-      });
-    }
-    if(el.querySelector('.prev')!==null){
-      el.querySelector('.prev').addEventListener('click', (e) => {
-        let element = el.querySelector('.track');
-        let style = getComputedStyle(element);
-        //let gap = parseInt(style.getPropertyValue('gap').split('px')[0]);
-        let gap = parseInt(getComputedStyle(el.querySelector(".item")).getPropertyValue("margin-right").split('px')[0]);
-        let scroll = el
-          .querySelector('.track .item')
-          .getBoundingClientRect().width;
-        let scrolled = element.scrollLeft;
-        let totalScrollValue = Math.ceil(scrolled - scroll - gap);
-        // console.log({
-        //   totalScrollValue,
-        //   width: element.scrollWidth,
-        // });
-        if (totalScrollValue < gap) {
-          // totalScrollValue = element.scrollWidth;
-          e.currentTarget.style.setProperty("display","none");
-        }
-        //console.log(scrolled, scroll, gap, Math.ceil(scrolled - scroll - gap));
-        element.scrollTo({
-          top: 0,
-          left: totalScrollValue,
-          behavior: 'smooth',
-        });
-      });
-    }
-  });
-</script>
+
 
 <!--
     - You can also use imported framework components directly in your markup!

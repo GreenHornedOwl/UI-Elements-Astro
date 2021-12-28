@@ -1,5 +1,6 @@
 @use "./framework"
 @use "./elements/carousel"
+@use "./elements/slider"
 
 body 
   overflow-x: hidden
@@ -7,3 +8,7 @@ body
   .item 
     border-radius: 1rem
     overflow: hidden  
+.gradient
+  background: linear-gradient(45deg, var(--color-brand), var(--color-accent))
+  &--gray
+    background: linear-gradient(45deg, var(--color-neutral-light), var(--color-light))

@@ -5,28 +5,33 @@
   width: auto
 .w-unset
   width: unset
+.w-100vw
+  width: 100vw  
 .h-100
   height: 100%
 .h-auto
   height: auto
 .h-unset
   height: unset
-@each $key, $value in $breakpoints
-  .w-#{$key}-100
-    +breakpoint($key)
-      width: 100%
-  .w-#{$key}-auto
-    +breakpoint($key)
-      width: auto
-  .w-#{$key}-unset
-    +breakpoint($key)
-      width: unset
-  .h-#{$key}-100
-    +breakpoint($key)
-      height: 100%
-  .h-#{$key}-auto
-    +breakpoint($key)
-      height: auto
-  .h-#{$key}-unset
-    +breakpoint($key)
-      height: unset
+.h-100vh
+  height: 100vh  
+
+// @each $key, $value in $breakpoints
+//   .w-#{$key}-100
+//     +breakpoint($key)
+//       width: 100%
+//   .w-#{$key}-auto
+//     +breakpoint($key)
+//       width: auto
+//   .w-#{$key}-unset
+//     +breakpoint($key)
+//       width: unset
+//   .h-#{$key}-100
+//     +breakpoint($key)
+//       height: 100%
+//   .h-#{$key}-auto
+//     +breakpoint($key)
+//       height: auto
+//   .h-#{$key}-unset
+//     +breakpoint($key)
+//       height: unset
