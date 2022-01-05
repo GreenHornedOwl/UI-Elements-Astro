@@ -23,7 +23,7 @@ import Section from '../design/partials/Section.astro';
               <div class="item"><img src="https://picsum.photos/id/1018/400/400" alt=""></div>
           </div>
           <button class="prev btn-fill--dark" style="display: none;">&#8592;</button>
-          <button class="next btn-fill--dark">&#8594;</button>
+          <button class="next btn-fill--dark">&#8594;</button>          
       </div>
       
   </Section>
@@ -55,7 +55,14 @@ import Section from '../design/partials/Section.astro';
           </div>
         </div>       
         <button class="prev btn-fill--dark">&#8592;</button>
-        <button class="next btn-fill--dark">&#8594;</button>        
+        <button class="next btn-fill--dark">&#8594;</button>      
+        <div class="bullets">
+          <span class="bullet active"></span>
+          <span class="bullet"></span>
+          <span class="bullet"></span>
+          <span class="bullet"></span>
+          <span class="bullet"></span>
+        </div>  
       </div>
       
   </Section>
@@ -134,8 +141,14 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
       let elementWidth = el.getBoundingClientRect().width;
       let scrolled = element.scrollLeft;
       let rest = Math.ceil(scrolled / elementWidth);
-      // element.scrollLeft = scrolled - elementWidth;
-      if (rest === 0) {
+      // element.scrollLeft = scrolled - elementWidth; 
+      let bullets = el.querySelectorAll(".bullet");    
+      if (rest === 0) {       
+        bullets.forEach(n => {
+          n.classList.remove("active");
+        });
+        [...bullets].pop().classList.add("active");
+
         element.scrollTo({
         top: 0,
         left: element.scrollWidth - parseInt(elementWidth),
@@ -144,6 +157,11 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
         // e.currentTarget.setAttribute('disabled', 'disabled');
       } else {
         // e.currentTarget.removeAttribute('disabled');
+        let currentSlide = [...bullets].reduce((r,v,k) => v.classList.contains("active") ? k : r,0);        
+        bullets.forEach(n => {
+          n.classList.remove("active");
+        });       
+        bullets[currentSlide - 1].classList.add("active");
         element.scrollTo({
         top: 0,
         left: scrolled - elementWidth,
@@ -163,10 +181,14 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
       let elementWidth = el.getBoundingClientRect().width;
       let scrolled = element.scrollLeft;
       let rest = Math.ceil(scrolled / elementWidth);
+       let bullets = el.querySelectorAll(".bullet");
       //element.scrollLeft = scrolled + elementWidth;
       if (slides === rest + 1) {
-        //e.currentTarget.setAttribute('disabled', 'disabled');
-
+        //e.currentTarget.setAttribute('disabled', 'disabled');       
+        bullets.forEach(n => {
+          n.classList.remove("active");
+        });
+        [...bullets].shift().classList.add("active");
         element.scrollTo({
           top: 0,
           left: 0,
@@ -175,7 +197,11 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
 
       } else {
         //e.currentTarget.removeAttribute('disabled');
-        
+        let nextSlide = [...bullets].reduce((r,v,k) => v.classList.contains("active") ? k : r,0);        
+        bullets.forEach(n => {
+          n.classList.remove("active");
+        });       
+        bullets[nextSlide+1].classList.add("active");
         element.scrollTo({
           top: 0,
           left: scrolled + elementWidth,
@@ -187,6 +213,21 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
         el.querySelector('.prev').removeAttribute('disabled');
       }
       console.log({ scrolled, elementWidth, rest, slides });
+    });
+    el.querySelectorAll('.bullet').forEach(n => {
+      n.addEventListener('click', (e) => {      
+        let index = Array.from(e.currentTarget.parentNode.children).indexOf(e.currentTarget);
+        let element = el.querySelector('.track');
+        let slideWidth = e.currentTarget.closest(".native-slider").querySelector(".slide").getBoundingClientRect().width;
+        Array.from(e.currentTarget.parentNode.children).filter(n=>n.classList.contains("active")).forEach(o=>o.classList.remove("active"))
+        e.currentTarget.classList.add("active");
+        element.scrollTo({
+          top: 0,
+          left: index*slideWidth,
+          behavior: 'smooth',
+        });
+        //console.log({index, slideWidth})
+      });
     });
   });
 </script>
