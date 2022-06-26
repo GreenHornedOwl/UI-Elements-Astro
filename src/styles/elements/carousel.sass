@@ -5,7 +5,7 @@
   --peek: 4rem
   display: grid
   grid-template-columns: auto minmax(0, 1fr) auto
-  @media (hover:hover)      
+  @media (hover) and (pointer: fine)      
     --peek: 0rem
   +breakpoint(xs)
     --items: 2    
@@ -22,7 +22,7 @@
     grid-auto-columns: calc(100% / var(--items, 4) - var(--peek, 4rem) - ((var(--items, 4) - 1)*var(--gap,2rem) / var(--items, 4)))
     overflow-x: auto    
     gap: var(--gap, 2rem)
-    @media (hover:hover)
+    @media (hover) and (pointer: fine)
       grid-auto-columns: calc(100% / var(--items, 4) - ((var(--items, 4) - 1)*var(--gap,2rem) / var(--items, 4)))
       overflow-x: hidden
   .item    
@@ -31,19 +31,19 @@
     // &:not(:last-child)
     //   margin-inline-start: 0
     //   margin-inline-end: var(--gap, 20px)
-    // @media (hover:hover)      
+    // @media (hover) and (pointer: fine)      
       // --basis: calc((100% - (var(--items, 1) - 1) * var(--gap, 20px)) / var(--items, 1))
   .prev
     display: none
     grid-area: 2/1/3/2
     z-index: 2
-    @media (hover:hover)
+    @media (hover) and (pointer: fine)
       display: block
   .next
     display: none
     grid-area: 2/3/3/4
     z-index: 2
-    @media (hover:hover)
+    @media (hover) and (pointer: fine)
       display: block  
 
   
