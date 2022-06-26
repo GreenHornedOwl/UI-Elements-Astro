@@ -1,14 +1,15 @@
 @use "../framework/mixins" as *
 .native-carousel
-  --gap: 2rem
+  --gap: 3rem
   --items: 1  
-  --peek: 4rem
+  --peek: 10rem
   display: grid
   grid-template-columns: auto minmax(0, 1fr) auto
   @media (hover) and (pointer: fine)      
     --peek: 0rem
   +breakpoint(xs)
     --items: 2    
+    --peek: 5rem
   +breakpoint(sm)
     --items: 3
   +breakpoint(lg)
@@ -19,7 +20,7 @@
     // flex-wrap: nowrap
     display: grid
     grid-auto-flow: column
-    grid-auto-columns: calc(100% / var(--items, 4) - var(--peek, 4rem) - ((var(--items, 4) - 1)*var(--gap,2rem) / var(--items, 4)))
+    grid-auto-columns: calc(100% / var(--items, 4) - var(--peek, 4rem))
     overflow-x: auto    
     gap: var(--gap, 2rem)
     @media (hover) and (pointer: fine)
