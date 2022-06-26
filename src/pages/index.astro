@@ -116,7 +116,7 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
         let element = el.querySelector('.track');       
         let style = getComputedStyle(element);
         //let gap = parseInt(style.getPropertyValue('gap').split('px')[0]);
-        let gap = parseInt(getComputedStyle(el.querySelector(".item")).getPropertyValue("margin-right").split('px')[0]);
+        let gap = parseInt(getComputedStyle(element).getPropertyValue("gap").split('rem')[0]);
         let scroll = el
           .querySelector('.item')
           .getBoundingClientRect().width;
@@ -149,7 +149,7 @@ node.querySelectorAll('.native-carousel').forEach((el) => {
         let element = el.querySelector('.track');
         let style = getComputedStyle(element);
         //let gap = parseInt(style.getPropertyValue('gap').split('px')[0]);
-        let gap = parseInt(getComputedStyle(el.querySelector(".item")).getPropertyValue("margin-right").split('px')[0]);
+        let gap = parseInt(getComputedStyle(element).getPropertyValue("gap").split('rem')[0]);
         let scroll = el
           .querySelector('.track .item')
           .getBoundingClientRect().width;
